@@ -1,4 +1,4 @@
-# Project-of-Node.js
+# Theme Social & Chatting Website
 
 Name of Groupe : éclair
 Member : Freder Sip, Runcong Li, Zixin Zou
@@ -23,10 +23,10 @@ If during the realization of our project, somes issues we didn’t think before 
 
 ### Basic Function
 A Chat Website has a HomePage and a ChatRoomPage. 
-1.All subjects display in the home page.=>express( API REST )
-2.User can create a new subject. =>express( API REST )
-3.User can choose exist subject and join it. =>express( API REST )
-4.Chat room page support multi-person live chat.=>(Socket.io)
+1. All subjects display in the home page.=>express( API REST )
+2. User can create a new subject. =>express( API REST )
+3. User can choose exist subject and join it. =>express( API REST )
+4. Chat room page support multi-person live chat.=>(Socket.io)
 
 ### Intermediate Function
 There are some new pages SubjectPage, UploadPage, UserPage.=> express( API REST )+Database (mongoose)
