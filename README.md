@@ -29,7 +29,7 @@ A Chat Website has a HomePage and a ChatRoomPage.
 4. Chat room page support multi-person live chat.=>(Socket.io)
 
 ### Intermediate Function
-There are some new pages SubjectPage, UploadPage, UserPage.=> express( API REST )+Database (mongoose)
+There are some new pages SubjectPage, UploadPage, UserPage.=> express( API REST )+Database (MySql)
 1. In the top of HomePage, you can find the subjects in a search bar. 
 2. User can upload their videos, images even video games etc. It display in   SubjectPage by sorted in chronological order. 
 3. User can modify person information, password at personal centre.
