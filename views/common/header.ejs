@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=data[0].title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  <div class="user">
+  	<% if(user.username){ %>
+          Bienvenue，<%= user.username %> | <a href="/user/logout">Déconnexion</a>
+  	<% }else{ %>
+		<a href="/user/reg" title="Inscription">Inscription</a> | <a href="/user/login" title="Connexion">Connexion</a>
+  	<% } %>
+  </div>

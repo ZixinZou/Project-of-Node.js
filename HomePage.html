@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Super Chat</title>
+</head>
+
+<body>
+
+<iframe id="list" frameborder="0" src="HomePage_List.html"  weight="450px" height="700px"></iframe>
+
+
+<iframe id="userpage" src="HomePage_User.html"  weight=auto height="700px"></iframe>
+
+</body>
+<script>
+        function iFrameHeight() {
+            var ifm= document.getElementById("userpage");
+            var subWeb = document.frames ? document.frames["userpage"].document : ifm.contentDocument;//ifm.contentDocument
+            if(ifm != null && subWeb != null) {
+                ifm.height = subWeb.body.scrollHeight;
+            }
+        }
+</script>
+</html>
