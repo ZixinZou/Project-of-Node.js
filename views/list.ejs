@@ -10,61 +10,62 @@
   <h1>Les détails</h1>
   <p>Titre: <%=data[0].title %></p>
   <div><%=data[0].content %></div>
+
   <div class="reply">
-    <h2>Commentaire</h2>
+    <% if(user.username){ %>
+    <h2>Start chatting!</h2>
     <div class="reply_con">
-      <table>
-        <% for(var i=0, len=data[1].length; i<len; i++) {%>
-          <tr>
-            <td><%=(i+1) %></td>
-            <td><%=data[1][i].content %></td>
-            <td><%=data[1][i].createtime %></td>
-          </tr>
-        <% } %>
-      </table>
-    </div>
-  </div>
-  <div class="answer">
-  <% if(user.username){ %>
-    <textarea class="ans_con" cols="100" rows="10"></textarea>
-    <p><input type="button" class="submit" data-titleid="<%=data[0].id %>" value="Soumettre"><span class="tip"></span></p>
-    <script type="text/javascript" src="http://mat1.gtimg.com/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      var running = false;
-      $('.submit').on('click', function(){
-        if(running) return;
-        running = true;
-        $('.tip').text('');
+      <h1>Le super Chat temps réel !</h1>
 
-        var ans_con = $('.ans_con').val();
-        if(!ans_con){
-          $('.tip').text('*L\'entrée ne peut pas être vide');
-          return;
-        }
-        $('.tip').text('Les données sont en cours de soumission...');
+      <form action="/" method="post" id="formulaire_chat">
+        <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+        <input type="submit" id="envoi_message" value="Envoyer" />
+      </form>
 
-        var titleid = $(this).data('titleid');
+      <section id="zone_chat">
 
-        $.ajax({
-          url : '/list/addreply',
-          data : {titleid:titleid, content:ans_con},
-          dataType : 'json',
-          type : 'get'
-        }).done(function(result){
-          if(result.code==0){
-            var html = '<tr><td>'+result.data.rid+'</td><td>'+ans_con+'</td><td>'+result.data.createtime+'</td></tr>';
-            $('.reply_con table').append(html);
-            $('.tip').text('');
-            $('.ans_con').val('');
-          }else{
-            $('.tip').text('La réponse a échoué');
+      </section>
+
+
+      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+
+          // Connexion à socket.io
+          var socket = io.connect('http://localhost:3030');
+
+          // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
+          var pseudo = prompt('Quel est votre pseudo ?');
+          socket.emit('nouveau_client', pseudo);
+          document.title = pseudo + ' - ' + document.title;
+
+          // Quand on reçoit un message, on l'insère dans la page
+          socket.on('message', function(data) {
+              insereMessage(data.pseudo, data.message)
+          })
+
+          // Quand un nouveau client se connecte, on affiche l'information
+          socket.on('nouveau_client', function(pseudo) {
+              $('#zone_chat').prepend('<p><em>' + pseudo + ' a rejoint le Chat !</em></p>');
+          })
+
+          // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
+          $('#formulaire_chat').submit(function () {
+              var message = $('#message').val();
+              socket.emit('message', message); // Transmet le message aux autres
+              insereMessage(pseudo, message); // Affiche le message aussi sur notre page
+              $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
+              return false; // Permet de bloquer l'envoi "classique" du formulaire
+          });
+
+          // Ajoute un message dans la page
+          function insereMessage(pseudo, message) {
+              $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
           }
-          running = false;
-        })
-      })
-    </script>
-  <% }else{%>
-    <p>Veuillez vous connecter et répondre<a href="/user/login">Aller à la connexion</a></p>
-  <% } %>
+      </script>
+    </div>
+      <% }else{%>
+        <p>Veuillez vous connecter et répondre<a href="/user/login">Aller à la connexion</a></p>
+      <% } %>
   </div>
 <% include common/footer.ejs %>
