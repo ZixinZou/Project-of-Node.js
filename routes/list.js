@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
-var list_m = require('../node_modules/list');
+var list_m = require('../models/list');
 
 
 // http://127.0.0.1:3000/list/1.html

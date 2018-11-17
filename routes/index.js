@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });*/
-var list_m = require('../node_modules/list');
+var list_m = require('../models/list');
 
 router.get('/', function(req, res, next) {
     list_m.getIndexList(function(result){

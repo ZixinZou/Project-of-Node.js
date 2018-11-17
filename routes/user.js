@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var user_m = require('../node_modules/user');
+var user_m = require('../models/user');
 
 // Aller directement à la page d'accueil
 router.get('/', function(req, res, next) {
