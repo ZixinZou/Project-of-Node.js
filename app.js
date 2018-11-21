@@ -7,7 +7,7 @@ let app = require('express')(),
 //new version START
 let express = require('express'),
     path = require('path'),
-    favicon = require('serve-favicon'),
+    // favidcon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
@@ -49,7 +49,7 @@ app.use(function(req, res, next){
 })
 
 // app.use(multer({dest:"./uploads"}).array("myfile"));
-var upload = multer({dest:'./uploads'});
+let upload = multer({dest:'./uploads'});
 app.use(upload.single('myfile'));
 app.get('/indexFormFile.html', function (req, res) {
     res.sendFile(__dirname + '/indexFormFile.html');
@@ -58,7 +58,7 @@ app.post('/indexFormFile.html', function (req, res) {
     let file = req.file,
             name = file.originalname;
         nameArray=name.split('');
-        var nameMime=[];
+        let nameMime=[];
         l=nameArray.pop();
         nameMime.unshift(l);
         while(nameArray.length!=0&&l!='.'){

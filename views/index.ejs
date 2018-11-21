@@ -41,6 +41,11 @@
     <h1 class="w3-margin w3-jumbo">Our Theme</h1>
 </header>
 
+<form action="/searchTopic" method="post">
+    <input type="text"  name="search_text" placeholder="Search..." required="required">
+    <input type="submit" name="submit" value="submit" ><span class="sear_tip"></span>
+</form>
+
     <table>
       <tr>
         <td>Title</td>
@@ -98,10 +103,5 @@
         </script>
     <% } %>
 </div>
-
-<form action="/searchTopic" method="post">
-    <input type="text"  name="search_text" placeholder="Search..." required="required">
-    <input type="submit" name="submit" value="submit" ><span class="sear_tip"></span>
-</form>
 
 <% include common/footer.ejs %>
