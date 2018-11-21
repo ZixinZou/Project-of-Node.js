@@ -43,5 +43,29 @@ module.exports = {
 		        }
 		    })
 		});
-	}
+	},
+    //Modify
+    mod : function(username, old_password, new_password, cb){ //User modify person information
+        pool.getConnection(function(err, connection){
+            if(err) throw err;
+
+            connection.query('SELECT `id` FROM `user` WHERE `username`=? AND `password`=?', [username, old_password], function(err, log_result){
+                if(err) throw err;
+
+                if(log_result.length)
+				{
+                    connection.query('UPDATE `user` SET `password`=? WHERE `username`=?', [new_password,username], function(err, mod_result){
+                        if(err) throw err;
+
+                        cb(mod_result);
+                        connection.release();
+                    })
+				}else{
+                    cb({isExisted:false});
+                    connection.release();
+				}
+            })
+
+        });
+    }
 }

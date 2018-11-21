@@ -12,12 +12,11 @@ let express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session');
+    multer = require('multer');
 
 let index = require('./routes/index');
     user = require('./routes/user');
     list = require('./routes/list');
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,6 +48,29 @@ app.use(function(req, res, next){
     next();
 })
 
+// app.use(multer({dest:"./uploads"}).array("myfile"));
+var upload = multer({dest:'./uploads'});
+app.use(upload.single('myfile'));
+app.get('/indexFormFile.html', function (req, res) {
+    res.sendFile(__dirname + '/indexFormFile.html');
+});
+app.post('/indexFormFile.html', function (req, res) {
+    let file = req.file,
+            name = file.originalname;
+        nameArray=name.split('');
+        var nameMime=[];
+        l=nameArray.pop();
+        nameMime.unshift(l);
+        while(nameArray.length!=0&&l!='.'){
+            l=nameArray.pop();
+            nameMime.unshift(l);
+        }
+        Mime=nameMime.join('');
+        // console.log(Mime);
+        fs.renameSync('./uploads/'+file.filename,'./uploads/'+ name +'-' + Date.now() +Mime);
+        res.send(req.file);
+});
+
 app.use('/', index);
 app.use('/user', user);
 app.use('/list', list);
@@ -73,8 +95,8 @@ io.sockets.on('connection', function (socket, pseudo) {
     });
 });
 
-server.listen(3031, () => {
-    console.log('Application démarrée sur le port 3031 !')
+server.listen(3030, () => {
+    console.log('Application démarrée sur le port 3030 !')
 })
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

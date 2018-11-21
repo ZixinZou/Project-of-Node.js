@@ -6,26 +6,61 @@
       border-top: 1px dashed #333;
     }
   </style>
-  <p><a href="/">Retour à l'accueil</a></p>
-  <h1>Les détails</h1>
-  <p>Titre: <%=data[0].title %></p>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <p><a href="/">Back to HomePage</a></p>
+  <h1>The Details</h1>
+  <p>Title: <%=data[0].title %></p>
   <div><%=data[0].content %></div>
 
-  <div class="reply">
+  <div class="chat">
     <% if(user.username){ %>
     <h2>Start chatting!</h2>
-    <div class="reply_con">
-      <h1>Le super Chat temps réel !</h1>
+    <div class="chat_con">
+
+      <script>
+      function replaceDoc()
+      {
+        location.reload();
+      }
+      </script>
 
       <form action="/" method="post" id="formulaire_chat">
         <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
         <input type="submit" id="envoi_message" value="Envoyer" />
-      </form>
+      </form> 
 
-      <section id="zone_chat">
+      <div>
+      <form enctype="multipart/form-data" action="http://127.0.0.1:3030/indexFormFile.html" method="post" target="hidden-iframe">
+        <input type="file" name="myfile">
+        <span class="tip"></span>
+         <input type="submit" class="submit" value="Upload" >
+       </form>
+       <iframe name="hidden-iframe" frameborder=0 width=0 height=0></iframe>
 
-      </section>
+       <script type="text/javascript" src="http://mat1.gtimg.com/libs/jquery/1.12.0/jquery.min.js"></script>
+      <script type="text/javascript">
+      </script>
+       </div>
 
+      <table>
+      <tr>
+        <td>Files</td>
+      </tr>
+      
+      <% for(var i=0, len=data.list.length; i<len; i++) {%>
+        <tr>
+          <td><a href="/list/<%=data.list[i] %>" title="<%=data.list[i] %>"><%=data.list[i] %></a></td>
+        </tr>
+      <% } %>
+    </table>
+
+      <section id="zone_chat"></section>
 
       <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
       <script src="/socket.io/socket.io.js"></script>
@@ -35,8 +70,8 @@
           var socket = io.connect('http://localhost:3030');
 
           // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
-          var pseudo = prompt('Quel est votre pseudo ?');
-          socket.emit('nouveau_client', pseudo);
+          var pseudo = prompt('What is your Nickname ?');
+          socket.emit('New Friend !', pseudo);
           document.title = pseudo + ' - ' + document.title;
 
           // Quand on reçoit un message, on l'insère dans la page
@@ -45,8 +80,8 @@
           })
 
           // Quand un nouveau client se connecte, on affiche l'information
-          socket.on('nouveau_client', function(pseudo) {
-              $('#zone_chat').prepend('<p><em>' + pseudo + ' a rejoint le Chat !</em></p>');
+          socket.on('New Friend !', function(pseudo) {
+              $('#zone_chat').prepend('<p><em>' + pseudo + ' joined the Chat !</em></p>');
           })
 
           // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
@@ -65,7 +100,7 @@
       </script>
     </div>
       <% }else{%>
-        <p>Veuillez vous connecter et répondre<a href="/user/login">Aller à la connexion</a></p>
+        <p>Please login and chatting<a href="/user/login">Go to the connection</a></p>
       <% } %>
   </div>
 <% include common/footer.ejs %>
