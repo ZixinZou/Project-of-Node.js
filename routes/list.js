@@ -9,8 +9,8 @@ let path = require('path');
 let messagePath = path.join(__dirname, '../uploads');
 
 function getdir(url){
-    var arr = url.split('.');
-    var len = arr.length;
+    let arr = url.split('.');
+    let len = arr.length;
     return arr[len-1];
 }
 
@@ -22,7 +22,7 @@ router.get('/:titleid.html', function(req, res) {
 	        console.log(err);
 	        return;
 	    }
-	    var count = files.length;
+	    let count = files.length;
 	    
 	    async.parallel([
 			function(async){
@@ -32,7 +32,7 @@ router.get('/:titleid.html', function(req, res) {
 			},
 		], function(err, results){
 			// console.log( results );
-			results.list = files;
+			results.file = files;
 			res.render('list', { data:results });
 		})
 	});

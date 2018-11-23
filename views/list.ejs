@@ -37,7 +37,7 @@
 
       <div>
       <form enctype="multipart/form-data" action="http://127.0.0.1:3030/indexFormFile.html" method="post" target="hidden-iframe">
-        <input type="file" name="myfile">
+        <input type="file" class="file" name="myfile">
         <span class="tip"></span>
          <input type="submit" class="submit" value="Upload" >
        </form>
@@ -45,6 +45,7 @@
 
        <script type="text/javascript" src="http://mat1.gtimg.com/libs/jquery/1.12.0/jquery.min.js"></script>
       <script type="text/javascript">
+      
       </script>
        </div>
 
@@ -53,9 +54,9 @@
         <td>Files</td>
       </tr>
       
-      <% for(var i=0, len=data.list.length; i<len; i++) {%>
+      <% for(var i=0, len=data.file.length; i<len; i++) {%>
         <tr>
-          <td><a href="/list/<%=data.list[i] %>" title="<%=data.list[i] %>"><%=data.list[i] %></a></td>
+          <td><a href="/file/<%=data.file[i] %>" title="<%=data.file[i] %>"><%=data.file[i] %></a></td>
         </tr>
       <% } %>
     </table>

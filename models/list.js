@@ -55,6 +55,18 @@ var func = {
 		});
 	}
 
+	// addUploadingFile : function(params, cb){
+	// 	pool.getConnection(function(err, connection){
+	// 	    if(err) throw err;
+
+	// 	    connection.query('INSERT INTO `uploadfile`  SET ?', params, function(err, result){
+	// 	        if(err) throw err;
+
+	// 	        cb(result);
+	// 	        connection.release();
+	// 	    })
+	// 	});
+	// }	
 }
 
 module.exports = func;
